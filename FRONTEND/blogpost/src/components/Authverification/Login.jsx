@@ -33,6 +33,7 @@ const Login = () => {
               id="floatingInput"
               placeholder="username"
               ref={usernameRef}
+              required
             />
             <label htmlFor="floatingInput">Username</label>
           </div>
@@ -43,6 +44,7 @@ const Login = () => {
               id="floatingPassword"
               placeholder="Password"
               ref={passwordRef}
+              required
             />
             <label htmlFor="floatingPassword">Password</label>
           </div>

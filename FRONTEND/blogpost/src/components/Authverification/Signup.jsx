@@ -41,7 +41,7 @@ const Signup = () => {
           </div>
 
           <div className="row d-flex justify-content-center">
-            <div className="col-md-8 col-lg-8">
+            <div className="col-md-8 col-lg-6">
               <h4 className="mb-3">Are you new here!</h4>
               <form
                 className="needs-validation"
@@ -57,8 +57,7 @@ const Signup = () => {
                       className="form-control"
                       id="firstName"
                       placeholder=""
-                      
-                      required=""
+                      required
                       ref={fullnameRef}
                     />
                     <div className="invalid-feedback">
@@ -77,6 +76,7 @@ const Signup = () => {
                       id="email"
                       placeholder="you@example.com"
                       ref={emailRef}
+                      required
                     />
                     <div className="invalid-feedback">
                       Please enter a valid email address for updates.
@@ -95,7 +95,7 @@ const Signup = () => {
                         className="form-control"
                         id="username"
                         placeholder="Username"
-                        required=""
+                        required
                         ref={usernameRef}
                       />
                       <div className="invalid-feedback">
@@ -116,7 +116,7 @@ const Signup = () => {
                         className="form-control"
                         id="password"
                         placeholder="Passowrd"
-                        required=""
+                        required
                         ref={passwordRef}
                       />
                       <div className="invalid-feedback">
