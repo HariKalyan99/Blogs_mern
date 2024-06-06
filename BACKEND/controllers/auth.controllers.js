@@ -18,7 +18,7 @@ const postLogin = async(request, response) => {
                 maxAge: 60*60*1000,
                 httpOnly: true
             })
-            return response.status(200).json({isLoggedIn: true});
+            return response.status(200).json(result);
         }else{
             return response.json({message: "Invalid credentials"})
         }
