@@ -60,7 +60,8 @@ class AuthServices {
                 const token = await this.generateToken(username);
                 return {
                     isLoggedIn: true,
-                    token
+                    token,
+                    fullname: response.fullname
                 }
             }else{
                 return {
