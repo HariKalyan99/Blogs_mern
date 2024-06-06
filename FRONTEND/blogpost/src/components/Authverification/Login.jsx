@@ -21,7 +21,7 @@ const Login = () => {
         navigate("/signup")
     }
   return (
-    <body className="login-container">
+    <div className="login-container">
       <main className="form-signin m-auto">
         <form onSubmit={(e) => handleSubmit(e)}>
           <h1 className="h3 mb-3 fw-normal">Log in</h1>
@@ -76,7 +76,7 @@ const Login = () => {
         
         </main>
         
-    </body>
+    </div>
 
   );
 };

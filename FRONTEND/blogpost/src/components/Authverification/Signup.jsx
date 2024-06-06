@@ -29,7 +29,7 @@ const Signup = () => {
     passwordRef.current.value = "";
   };
   return (
-    <body>
+    <div>
       <div className="container">
         <main>
           <div className="py-5 text-center">
@@ -175,7 +175,7 @@ const Signup = () => {
       ></script>
 
       <script src="checkout.js"></script>
-    </body>
+    </div>
   );
 };
 

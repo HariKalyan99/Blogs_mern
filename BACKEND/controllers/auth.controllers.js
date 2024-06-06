@@ -16,7 +16,7 @@ const postLogin = async(request, response) => {
         if(result.isLoggedIn){
             response.cookie("remember_token", result.token, {
                 maxAge: 60*60*1000,
-                httpOnly: true
+                httpOnly: false
             })
             return response.status(200).json(result);
         }else{

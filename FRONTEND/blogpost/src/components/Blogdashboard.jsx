@@ -3,17 +3,17 @@ import { Link } from "react-router-dom";
 
 const Blogdashboard = () => {
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     enqueueSnackbar("Logged out!", {variant: "warning"})
     }
-    if(localStorage.getItem('active')){
-      var {fullname, token} = JSON.parse(localStorage.getItem('active'));
+    if(sessionStorage.getItem('active')){
+      var {fullname, token} = JSON.parse(sessionStorage.getItem('active'));
     }
   
 
   if(fullname){
     return (
-      <body>
+      <div>
         <div className="container-fluid">
           <header className="border-bottom lh-1 py-3">
             <div className="row flex-nowrap justify-content-between align-items-center">
@@ -641,11 +641,11 @@ const Blogdashboard = () => {
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossOrigin="anonymous"
         ></script>
-      </body>
+      </div>
     );
   }else{
     return(
-      <body>
+      <div>
         <div className="container-fluid">
           <header className="border-bottom lh-1 py-3">
             <div className="row flex-nowrap justify-content-between align-items-center">
@@ -748,7 +748,6 @@ const Blogdashboard = () => {
                     World
                   </strong>
                   <h3 className="mb-0">Featured posts</h3>
-                  <div className="mb-1 text-body-secondary">Nov 12</div>
                   <p className="card-text mb-auto">
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.
@@ -756,11 +755,12 @@ const Blogdashboard = () => {
                   <a
                     href="#"
                     className="icon-link gap-1 icon-link-hover stretched-link"
+                    onClick={() => {
+                      return enqueueSnackbar("Sign in to access!", {variant: "warning"})
+                    }}
                   >
                     Continue reading
-                    <svg className="bi">
-                      <use xlinkHref="#chevron-right"></use>
-                    </svg>
+                    
                   </a>
                 </div>
                 <div className="col-auto d-none d-lg-block">
@@ -790,7 +790,6 @@ const Blogdashboard = () => {
                     Design
                   </strong>
                   <h3 className="mb-0">Post title</h3>
-                  <div className="mb-1 text-body-secondary">Nov 11</div>
                   <p className="mb-auto">
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.
@@ -798,11 +797,11 @@ const Blogdashboard = () => {
                   <a
                     href="#"
                     className="icon-link gap-1 icon-link-hover stretched-link"
+                    onClick={() => {
+                      return enqueueSnackbar("Sign in to access!", {variant: "warning"})
+                    }}
                   >
-                    Continue reading
-                    <svg className="bi">
-                      <use xlinkHref="#chevron-right"></use>
-                    </svg>
+                    Continue posting
                   </a>
                 </div>
                 <div className="col-auto d-none d-lg-block">
@@ -1272,7 +1271,7 @@ const Blogdashboard = () => {
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossOrigin="anonymous"
         ></script>
-      </body>
+      </div>
     )
   }
 

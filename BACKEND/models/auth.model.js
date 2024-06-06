@@ -7,6 +7,6 @@ const authSchema = new mongoose.Schema({
     password: {type: String, required: true},
 }, {timestamps: true})
 
-const AuthModel = new mongoose.model("Blogs", authSchema, 'blogs');
+const AuthModel = new mongoose.model("Authenticate", authSchema, 'auth');
 
 module.exports = AuthModel;
