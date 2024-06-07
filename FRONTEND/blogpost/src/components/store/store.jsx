@@ -26,7 +26,7 @@ function pureReducerPostFunction(currentState, action) {
         let removedPostList = currentState.filter((x) => x['_id'] !== action.payload.id);
         newPostList = removedPostList;   
     }
-    return newPostList
+    return newPostList;
 }
 
 
