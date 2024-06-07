@@ -130,12 +130,12 @@ const Blogdashboard = () => {
                     This is a wider card with supporting text below as a natural
                     lead-in to additional content.
                   </p>
-                  <a
-                    href="#"
+                  <Link
+                    to={"/blogs-list"}
                     className="icon-link gap-1 icon-link-hover stretched-link"
                   >
                     Continue reading
-                  </a>
+                  </Link>
                 </div>
                 <div className="col-auto d-none d-lg-block">
                   <svg
