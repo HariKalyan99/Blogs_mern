@@ -84,6 +84,25 @@ const BlogStoreProvider = ({children}) => {
     }, [loginUserData])
 
     useEffect(() => {
+        const controller = new AbortController();
+        const {signal} = controller;
+        const fetchPostList = async() => {
+            try{
+                const {data} = await axios.get('http://127.0.0.1:8081/blogs/read', {signal});
+                console.log(data); 
+            }catch(error){  
+                console.log(error);
+            }
+        }
+        
+        fetchPostList();
+
+        return () => {
+            controller.abort();
+        }
+    }, [])
+
+    useEffect(() => {
         const addNewPosts = async(blog) => {
             try{
                 const {data} = await axios.post('http://127.0.0.1:8081/blogs/new', {
