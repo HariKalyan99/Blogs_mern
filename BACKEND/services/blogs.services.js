@@ -37,6 +37,15 @@ class BlogsServices {
             throw error;
         }
     }
+
+    search = async(title) => {
+        try{
+            const result = await BlogsModel.find({title: {$regex : new RegExp(title)}});
+            return result;
+        }catch(error){
+            throw error
+        }
+    }
 }
 
 module.exports = BlogsServices;

@@ -10,6 +10,7 @@ export const blogStore = createContext({
     addPost: () => {},
     updatePost: () => {},
     deletePost: () => {},
+    searchTerm: () => {}
 })
 
 
@@ -25,6 +26,8 @@ function pureReducerPostFunction(currentState, action) {
     }else if(action.type === "DELETE_POSTS"){
         let removedPostList = currentState.filter((x) => x['_id'] !== action.payload.id);
         newPostList = removedPostList;   
+    }else if(action.type === "SEARCH_POSTS"){
+        newPostList = action.payload.data
     }
     return newPostList;
 }
@@ -38,6 +41,7 @@ const BlogStoreProvider = ({children}) => {
     const [newPosts, setNewPosts] = useState("");
     const [deletedPosts, setDeletedPosts] = useState("");
     const [updatedPosts, setUpdatedPosts] = useState("");
+    const [searchPosts, setSearchedPosts] = useState("");
 
     const [postList, dispatchPostList] = useReducer(pureReducerPostFunction, []);
 
@@ -161,6 +165,29 @@ const BlogStoreProvider = ({children}) => {
 
     }, [updatedPosts])
 
+    useEffect(() => {
+        const searchPostFromList = async(title) => {
+            try{
+                const {data} = await axios.get(`http://127.0.0.1:8081/blogs/search?title=${title}`)
+                dispatchPostList({type: "SEARCH_POSTS", payload: {
+                    data
+                }})
+            }catch(error){
+                console.log(error)
+            }
+        }
+        
+        let interval = setTimeout(() => {
+               return searchPostFromList(searchPosts)
+        }, 600)
+
+        return () => {
+            clearInterval(interval)
+        }
+
+
+    }, [searchPosts])
+
     const postSignUpUser = (user) => {
         setSignUpUserData({...user});
     }
@@ -180,9 +207,13 @@ const BlogStoreProvider = ({children}) => {
     const updatePost = (blog) => {
         setUpdatedPosts(blog)
     }
+
+    const searchTerm = (title) => {
+        setSearchedPosts(title);
+    }
     
     return(
-        <blogStore.Provider value={{postLoginUser, postSignUpUser, postList, addPost, deletePost, updatePost}}>
+        <blogStore.Provider value={{postLoginUser, postSignUpUser, postList, addPost, deletePost, updatePost, searchTerm}}>
             {children}
         </blogStore.Provider>
     )

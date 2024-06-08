@@ -40,7 +40,16 @@ const deleteBlogs = async(request, response) => {
     }
 }     
 
+const searchBlogs = async(request, response) => {
+    const {title} = request.query;
+    try{
+        const result = await Blogs.search(title);
+        return response.status(200).json(result)
+    }catch(error){
+        return response.status(404).json({message: error.message})
+    }
+}
 
 module.exports = {
-    readBlogs, deleteBlogs, editBlogs, postBlogs
+    readBlogs, deleteBlogs, editBlogs, postBlogs,searchBlogs
 }

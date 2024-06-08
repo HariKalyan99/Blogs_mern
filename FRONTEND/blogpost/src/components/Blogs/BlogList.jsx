@@ -4,7 +4,7 @@ import { blogStore } from "../store/store";
 
 const BlogList = () => {
 
-  const {postList} = useContext(blogStore)
+  const {postList,searchTerm} = useContext(blogStore)
   return (
     <div>
       <header className="p-3">
@@ -18,8 +18,9 @@ const BlogList = () => {
               <input
                 type="search"
                 className="form-control form-control-dark text-bg-light p-2"
-                placeholder="Search for blogs..."
+                placeholder="debounce search..."
                 aria-label="Search"
+                onChange={(e) => searchTerm(e.target.value)}
               />
             </form>
           </div>
