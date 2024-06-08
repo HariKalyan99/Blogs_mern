@@ -1,7 +1,16 @@
+import { useContext, useState } from "react"
+import { blogStore } from "../store/store"
+import EditBlog from "./EditBlog";
 
 const Blog = ({blog}) => {
+
+  const {deletePost} = useContext(blogStore)
+  const [editBay, setEditBay] = useState(false);
   return (
     <div className="col">
+            {editBay ? <div>
+              <EditBlog editBay={editBay} setEditBay={setEditBay} blog={blog}/>
+            </div> :
               <div className="card shadow-sm">
                 <img
                   src="https://res.cloudinary.com/bornfight-studio/image/upload/v1678794602/bornfight-web-2022/wp_2020_07_bornfight_blog_grubisa_ai_data_facebook_f46af9f183.jpg"
@@ -28,12 +37,14 @@ const Blog = ({blog}) => {
                       <button
                         type="button"
                         className="btn btn-sm btn-outline-secondary"
+                        onClick={() => setEditBay(true)}
                       >
                         edit
                       </button>
                       <button
                         type="button"
                         className="btn btn-sm btn-outline-secondary"
+                        onClick={() => deletePost(blog._id)}
                       >
                         delete
                       </button>
@@ -41,7 +52,7 @@ const Blog = ({blog}) => {
                     <small className="text-body-secondary">{new Date(blog.createdAt).toDateString()}</small>
                   </div>
                 </div>
-              </div>
+              </div>}
             </div>
   )
 }

@@ -124,9 +124,42 @@ const BlogStoreProvider = ({children}) => {
         }
     }, [newPosts])
 
+    useEffect(() => {
+        const removePosts = async(id) => {
+            try{
+                await axios.delete(`http://127.0.0.1:8081/blogs/remove/${id}`);
+                dispatchPostList({type: "DELETE_POSTS", payload: {
+                    id
+                }})
 
+            }catch(error){
+                console.log(error)
+            }
+        }
 
+        if(deletedPosts){
+            removePosts(deletedPosts)
+        }
+    }, [deletedPosts])
 
+    useEffect(() => {
+        const updatePosts = async({author, title, body, tags, id}) => {
+            try{
+                const {data} = await axios.put(`http://127.0.0.1:8081/blogs/edit/${id}`,{
+                    author,title, body, tags
+                })
+                dispatchPostList({type: "EDIT_POSTS", payload: {
+                    data, id
+                }})
+            }catch(error){
+                console.log(error)
+            }
+        }
+        if(updatedPosts){
+            updatePosts(updatedPosts)
+        }
+
+    }, [updatedPosts])
 
     const postSignUpUser = (user) => {
         setSignUpUserData({...user});
@@ -141,11 +174,11 @@ const BlogStoreProvider = ({children}) => {
     }
 
     const deletePost = (id) => {
-        console.log(id)
+        setDeletedPosts(id)
     }
 
-    const updatePost = (id, blog) => {
-        console.log(id, blog)
+    const updatePost = (blog) => {
+        setUpdatedPosts(blog)
     }
     
     return(
