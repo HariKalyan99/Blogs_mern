@@ -5,7 +5,8 @@ const blogsSchema = new mongoose.Schema({
     author: {type: String, required: true, maxlength: 50},
     title: {type: String, required: true, maxlength: 150},
     body: {type: String, required: true, maxlength: 500},
-    tags: {type: [String]}
+    tags: {type: [String]},
+    fullname: {type: String, required: true}
 }, {timestamps: true});
 
 

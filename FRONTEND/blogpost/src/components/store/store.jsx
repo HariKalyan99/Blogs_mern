@@ -89,7 +89,9 @@ const BlogStoreProvider = ({children}) => {
         const fetchPostList = async() => {
             try{
                 const {data} = await axios.get('http://127.0.0.1:8081/blogs/read', {signal});
-                console.log(data); 
+                dispatchPostList({type: "INITIAL_POSTS", payload: {
+                    data
+                }})
             }catch(error){  
                 console.log(error);
             }
@@ -106,7 +108,7 @@ const BlogStoreProvider = ({children}) => {
         const addNewPosts = async(blog) => {
             try{
                 const {data} = await axios.post('http://127.0.0.1:8081/blogs/new', {
-                    ...blog
+                    ...blog, fullname: JSON.parse(sessionStorage.getItem('active')).fullname
                 })
                 console.log(data);
                 dispatchPostList({type: "ADD_POSTS", payload: {
