@@ -1,9 +1,9 @@
 import { useContext, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { blogStore } from "../store/store";
 
 const Blogpost = () => {
-  
+  const navigate = useNavigate();
   const {addPost} = useContext(blogStore)
   const authorRef = useRef("");
   const titleRef = useRef("");
@@ -22,6 +22,7 @@ const Blogpost = () => {
     titleRef.current.value = "";
     bodyRef.current.value = "";
     tagsRef.current.value = "";
+    navigate("/blogs-list")
   }
   return (
     <div>
