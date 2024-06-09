@@ -10,7 +10,10 @@ export const blogStore = createContext({
     addPost: () => {},
     updatePost: () => {},
     deletePost: () => {},
-    searchTerm: () => {}
+    searchTerm: () => {},
+    getMyBlogs: () => {},
+    invoker: true,
+    setInvoker: () => {}
 })
 
 
@@ -28,6 +31,8 @@ function pureReducerPostFunction(currentState, action) {
         newPostList = removedPostList;   
     }else if(action.type === "SEARCH_POSTS"){
         newPostList = action.payload.data
+    }else if(action.type === "USER_BLOGS") {
+        newPostList = action.payload.data;
     }
     return newPostList;
 }
@@ -42,6 +47,8 @@ const BlogStoreProvider = ({children}) => {
     const [deletedPosts, setDeletedPosts] = useState("");
     const [updatedPosts, setUpdatedPosts] = useState("");
     const [searchPosts, setSearchedPosts] = useState("");
+    const [getUser, setUser] = useState(true);
+    const [invoker, setInvoker] = useState(true);
 
     const [postList, dispatchPostList] = useReducer(pureReducerPostFunction, []);
 
@@ -101,12 +108,14 @@ const BlogStoreProvider = ({children}) => {
             }
         }
         
-        fetchPostList();
+        if(invoker || !invoker){
+            fetchPostList();
+        }
 
         return () => {
             controller.abort();
         }
-    }, [])
+    }, [invoker])
 
     useEffect(() => {
         const addNewPosts = async(blog) => {
@@ -188,6 +197,23 @@ const BlogStoreProvider = ({children}) => {
 
     }, [searchPosts])
 
+    useEffect(() => {
+        const fetchUserBlog = async() => {
+            try{
+                const {data} = await axios.get(`http://127.0.0.1:8081/blogs/user?fullname=${JSON.parse(sessionStorage.getItem('active')).fullname}`)
+                dispatchPostList({type: "USER_BLOGS", payload: {
+                    data
+                }})
+            }catch(error){
+                console.log(error)
+            }
+        }
+
+        if(getUser || !getUser){
+            fetchUserBlog();
+        }
+    }, [getUser])
+
     const postSignUpUser = (user) => {
         setSignUpUserData({...user});
     }
@@ -211,9 +237,13 @@ const BlogStoreProvider = ({children}) => {
     const searchTerm = (title) => {
         setSearchedPosts(title);
     }
+
+    const getMyBlogs = () => {
+        setUser(!getUser)
+    }
     
     return(
-        <blogStore.Provider value={{postLoginUser, postSignUpUser, postList, addPost, deletePost, updatePost, searchTerm}}>
+        <blogStore.Provider value={{postLoginUser, postSignUpUser, postList, addPost, deletePost, updatePost, searchTerm, getMyBlogs, invoker, setInvoker}}>
             {children}
         </blogStore.Provider>
     )

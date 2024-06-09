@@ -46,6 +46,15 @@ class BlogsServices {
             throw error
         }
     }
+
+    userList = async(fullname) => {
+        try{
+            const result = await BlogsModel.find({fullname});
+            return result;
+        }catch(error){
+            throw error;
+        }
+    }
 }
 
 module.exports = BlogsServices;
