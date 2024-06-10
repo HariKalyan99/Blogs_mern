@@ -11,6 +11,8 @@ import Login from './components/Authverification/Login.jsx';
 import {SnackbarProvider} from 'notistack'
 import Blogpost from './components/Blogs/Blogpost.jsx';
 import BlogList from './components/Blogs/BlogList.jsx';
+import AdminPanel from './components/Admin/AdminPanel.jsx';
+import Userdashboard from './components/Admin/Userdashboard.jsx';
 
 const router = createBrowserRouter([
   {path: "/", element: <App />, children: [
@@ -18,7 +20,9 @@ const router = createBrowserRouter([
     {path: "/signup", element: <Signup />},
     {path: "/login", element: <Login />},
     {path: "/create-blogs", element: <Blogpost />},
-    {path: "/blogs-list", element: <BlogList />}
+    {path: "/blogs-list", element: <BlogList />},
+    {path: "/adminpanel", element: <AdminPanel />},
+    {path: "/user-dashboard", element: <Userdashboard />}
   ]}
 ])
 

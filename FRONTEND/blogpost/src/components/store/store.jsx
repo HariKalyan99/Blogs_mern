@@ -13,7 +13,10 @@ export const blogStore = createContext({
     searchTerm: () => {},
     getMyBlogs: () => {},
     invoker: true,
-    setInvoker: () => {}
+    setInvoker: () => {},
+    authInformation: [],
+    adminActive: () => {},
+    adminCallUser: () => {}
 })
 
 
@@ -33,10 +36,20 @@ function pureReducerPostFunction(currentState, action) {
         newPostList = action.payload.data
     }else if(action.type === "USER_BLOGS") {
         newPostList = action.payload.data;
+    }else if(action.type === "AUTHUSER_BLOGS"){
+        newPostList = action.payload.data;
     }
     return newPostList;
 }
 
+
+function pureReducerAuthInfo(currentState, action){
+    let newAuthList = currentState;
+    if(action.type === "AUTH_INFO"){
+        newAuthList = action.payload.data;
+    }
+    return newAuthList
+}
 
 
 const BlogStoreProvider = ({children}) => {
@@ -49,8 +62,12 @@ const BlogStoreProvider = ({children}) => {
     const [searchPosts, setSearchedPosts] = useState("");
     const [getUser, setUser] = useState(true);
     const [invoker, setInvoker] = useState(true);
+    const [getAuthUsers, setAuthUsers] = useState(true);
+    const [getUserSpecific, setUserSpecific] = useState('');
 
     const [postList, dispatchPostList] = useReducer(pureReducerPostFunction, []);
+
+    const [authInformation, dispatchAuthInformation] = useReducer(pureReducerAuthInfo, []);
 
     useEffect(() => {
         const postSignup = async(user) => {
@@ -214,6 +231,42 @@ const BlogStoreProvider = ({children}) => {
         }
     }, [getUser])
 
+    useEffect(() => {
+        const fetchUserSpecificBlog = async(name) => {
+            try{
+                const {data} = await axios.get(`http://127.0.0.1:8081/blogs/user?fullname=${name}`)
+                dispatchPostList({type: "AUTHUSER_BLOGS", payload: {
+                    data
+                }})
+                console.log(data)
+            }catch(error){
+                console.log(error)
+            }
+        }
+
+        if(getUserSpecific){
+            fetchUserSpecificBlog(getUserSpecific);
+        }
+    }, [getUserSpecific])
+
+    useEffect(() => {
+        const fetchAllUsers = async() => {
+            try{
+                const {data} = await axios.get(`http://127.0.0.1:8081/auth/authusers`);
+                dispatchAuthInformation({type: "AUTH_INFO", payload: {
+                    data
+                }})
+                console.log(data)
+            }catch(error){
+                console.log(error);
+            }
+        } 
+
+        if(getAuthUsers || !getAuthUsers){
+            fetchAllUsers();
+        }
+    }, [getAuthUsers])
+
     const postSignUpUser = (user) => {
         setSignUpUserData({...user});
     }
@@ -241,9 +294,17 @@ const BlogStoreProvider = ({children}) => {
     const getMyBlogs = () => {
         setUser(!getUser)
     }
+
+    const adminActive = () => {
+        setAuthUsers(!getAuthUsers);
+    }
+
+    const adminCallUser = (name) => {
+        setUserSpecific(name)
+    }
     
     return(
-        <blogStore.Provider value={{postLoginUser, postSignUpUser, postList, addPost, deletePost, updatePost, searchTerm, getMyBlogs, invoker, setInvoker}}>
+        <blogStore.Provider value={{postLoginUser, postSignUpUser, postList, addPost, deletePost, updatePost, searchTerm, getMyBlogs, invoker, setInvoker, authInformation,  adminActive, adminCallUser}}>
             {children}
         </blogStore.Provider>
     )

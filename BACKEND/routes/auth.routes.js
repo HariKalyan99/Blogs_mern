@@ -1,4 +1,4 @@
-const { postSignup,postLogin } = require('../controllers/auth.controllers');
+const { postSignup,postLogin, getAllAuthUsers } = require('../controllers/auth.controllers');
 const validateAuthSignupMiddleware = require('../middlewares/auth.middleware');
 const authLoginUserMiddleware = require('../middlewares/authLogin.middleware');
 const authSignUpValidator = require('../validators/auth.validators');
@@ -7,6 +7,7 @@ const authRoutes = require('express').Router();
 const signupValidation = validateAuthSignupMiddleware(authSignUpValidator)
 const loginValidation = authLoginUserMiddleware(authUserLoginValidator);
 
+authRoutes.get("/authusers", getAllAuthUsers)
 authRoutes.post("/signup",signupValidation, postSignup);
 authRoutes.post("/login",loginValidation, postLogin);
 

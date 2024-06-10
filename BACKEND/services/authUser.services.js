@@ -19,6 +19,15 @@ class AuthUserServices {
             throw error
         }
     }
+
+    getAuthUsers = async() => {
+        try{
+            const result = await AuthModel.find();
+            return result;
+        }catch(error){
+            throw error
+        }
+    }
 }
 
 

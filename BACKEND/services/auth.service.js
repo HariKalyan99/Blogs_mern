@@ -61,7 +61,8 @@ class AuthServices {
                 return {
                     isLoggedIn: true,
                     token,
-                    fullname: response.fullname
+                    fullname: response.fullname,
+                    role: response.role
                 }
             }else{
                 return {

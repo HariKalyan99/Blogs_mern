@@ -1,5 +1,7 @@
 const AuthServices = require("../services/auth.service");
 const Auth = new AuthServices();
+const AuthUserServices = require("../services/authUser.services");
+const AuthUserInstance = new AuthUserServices();
 
 const postSignup = async(request, response) => {
     try{
@@ -27,4 +29,14 @@ const postLogin = async(request, response) => {
     }
 }
 
-module.exports = {postSignup, postLogin};
+
+const getAllAuthUsers = async(request, response) => {
+    try{
+        const result = await AuthUserInstance.getAuthUsers();
+        return response.status(200).json(result);
+    }catch(error){
+        return response.json({message: error.message})
+    }
+}
+
+module.exports = {postSignup, postLogin, getAllAuthUsers};
