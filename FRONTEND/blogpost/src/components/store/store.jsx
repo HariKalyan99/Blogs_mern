@@ -140,12 +140,13 @@ const BlogStoreProvider = ({children}) => {
                 const {data} = await axios.post('http://127.0.0.1:8081/blogs/new', {
                     ...blog, fullname: JSON.parse(sessionStorage.getItem('active')).fullname
                 })
-                console.log(data);
+                
                 dispatchPostList({type: "ADD_POSTS", payload: {
                     data
                 }})
+                enqueueSnackbar(`New Post added`, {variant: "default"})
             }catch(error){
-                console.log(error)
+                enqueueSnackbar(error.message, {variant: "error",preventDuplicate: true})
             }
         }
 
@@ -161,9 +162,9 @@ const BlogStoreProvider = ({children}) => {
                 dispatchPostList({type: "DELETE_POSTS", payload: {
                     id
                 }})
-
+                enqueueSnackbar(`Post removed`, {variant: "default"})
             }catch(error){
-                console.log(error)
+                enqueueSnackbar(error.message, {variant: "error",preventDuplicate: true})
             }
         }
 
@@ -181,8 +182,9 @@ const BlogStoreProvider = ({children}) => {
                 dispatchPostList({type: "EDIT_POSTS", payload: {
                     data, id
                 }})
+                enqueueSnackbar(`Post updated`, {variant: "default"})
             }catch(error){
-                console.log(error)
+                enqueueSnackbar(error.message, {variant: "error",preventDuplicate: true})
             }
         }
         if(updatedPosts){
@@ -198,6 +200,7 @@ const BlogStoreProvider = ({children}) => {
                 dispatchPostList({type: "SEARCH_POSTS", payload: {
                     data
                 }})
+
             }catch(error){
                 console.log(error)
             }
@@ -238,7 +241,7 @@ const BlogStoreProvider = ({children}) => {
                 dispatchPostList({type: "AUTHUSER_BLOGS", payload: {
                     data
                 }})
-                console.log(data)
+                enqueueSnackbar(`Blogs of ${name}`, {variant: "default"})
             }catch(error){
                 console.log(error)
             }
@@ -256,7 +259,6 @@ const BlogStoreProvider = ({children}) => {
                 dispatchAuthInformation({type: "AUTH_INFO", payload: {
                     data
                 }})
-                console.log(data)
             }catch(error){
                 console.log(error);
             }

@@ -14,7 +14,13 @@ const AdminPanel = () => {
           <svg className="bi" width="1em" height="1em"><use xlinkHref="#collection"></use></svg>
         </div>
         <h3 className="fs-2 text-body-emphasis">{auth.fullname}</h3>
-        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <p>Role: {auth.role}</p>
+        <p>Username: {auth.username}</p>
+        <p>Email Id: {auth.email}</p>
+        <p>Created Date: {new Date(auth.createdAt).toDateString()}</p>
+        <p>Created Time: {new Date(auth.createdAt).toLocaleTimeString()}</p>
+        <p>Last Updated @: {new Date(auth.updatedAt).toLocaleTimeString()} {new Date(auth.createdAt).toDateString()}</p>
+
         <Link to={"/user-dashboard"} className="icon-link" onClick={() => adminCallUser(auth.fullname)}>
           Go to user panel
           <svg className="bi"><use xlinkHref="#chevron-right"></use></svg>

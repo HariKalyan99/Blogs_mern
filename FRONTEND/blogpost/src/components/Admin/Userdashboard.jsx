@@ -12,11 +12,13 @@ const Userdashboard = () => {
           <svg className="bi" width="1em" height="1em"><use xlinkHref="#toggles2"></use></svg>
         </div>
         <div>
+            <p className='fw-bold'>Author: {posts.author}</p>
           <h3 className="fs-2 text-body-emphasis">{posts.title}</h3>
           <p>{posts.body}</p>
-          <a href="#" className="btn btn-primary">
-            Primary button
-          </a>
+          <p>Last updated at: {new Date(posts.updatedAt).toLocaleTimeString()} {new Date(posts.updatedAt).toLocaleDateString()}</p>
+          <p className='btn btn-outline-dark'>
+            {posts.tags.join("#")}
+          </p>
         </div>
       </div>)}
       

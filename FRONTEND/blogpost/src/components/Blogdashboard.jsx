@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { blogStore } from "./store/store";
 
 const Blogdashboard = () => {
-  const {adminActive} = useContext(blogStore)
+  const {adminActive, setInvoker, invoker} = useContext(blogStore)
   const handleLogout = () => {
     sessionStorage.clear();
     enqueueSnackbar("Logged out!", {variant: "warning"})
@@ -768,6 +768,7 @@ const Blogdashboard = () => {
                   <Link
                     to={"/blogs-list"}
                     className="icon-link gap-1 icon-link-hover stretched-link"
+                    onClick={() => setInvoker(!invoker)}
                   >
                     Continue reading
                   </Link>
