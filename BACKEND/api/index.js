@@ -2,10 +2,10 @@ require('dotenv').config();
 const port = 8081;
 const cors = require('cors');
 const express = require('express');
-const mongoUrl = require('./config');
+const mongoUrl = require('../config');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/auth.routes');
-const blogsRoutes = require('./routes/blogs.routes');
+const blogsRoutes = require('../routes/blogs.routes');
+const authRoutes = require('../routes/auth.routes');
 
 const app = express();
 
