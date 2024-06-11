@@ -2,10 +2,10 @@ require('dotenv').config();
 const port = 8081;
 const cors = require('cors');
 const express = require('express');
-const mongoUrl = require('../config');
+const mongoUrl = process.env.MONGODB_URI;
 const mongoose = require('mongoose');
-const blogsRoutes = require('../routes/blogs.routes');
-const authRoutes = require('../routes/auth.routes');
+const blogsRoutes = require('./routes/blogs.routes');
+const authRoutes = require('./routes/auth.routes');
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use("/auth", authRoutes);
 app.use("/blogs", blogsRoutes);
 
 
-mongoose.connect(mongoUrl.mongoDBuri).then(() => {
+mongoose.connect(mongoUrl).then(() => {
     console.log("Successfully connected to the mongo DB");
     app.listen(port, () => {
         console.log(`Listening on port: ${port}`)
