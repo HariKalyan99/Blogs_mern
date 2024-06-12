@@ -72,7 +72,7 @@ const BlogStoreProvider = ({children}) => {
     useEffect(() => {
         const postSignup = async(user) => {
             try{
-                await axios.post('https://blogs-mern-m6yo.vercel.app:8081/auth/signup', {
+                await axios.post('http://127.0.0.1:8081/auth/signup', {
                     ...user
                 })
                 enqueueSnackbar(`Registered!`)
@@ -91,7 +91,7 @@ const BlogStoreProvider = ({children}) => {
     useEffect(() => {
         const postLogin = async(user) => {
             try{
-                const {data} = await axios.post('https://blogs-mern-m6yo.vercel.app:8081/auth/login', {
+                const {data} = await axios.post('http://127.0.0.1:8081/auth/login', {
                     ...user
                 })
                 sessionStorage.setItem('active', JSON.stringify(data));
@@ -116,7 +116,7 @@ const BlogStoreProvider = ({children}) => {
         const {signal} = controller;
         const fetchPostList = async() => {
             try{
-                const {data} = await axios.get('https://blogs-mern-m6yo.vercel.app:8081/blogs/read', {signal});
+                const {data} = await axios.get('http://127.0.0.1:8081/blogs/read', {signal});
                 dispatchPostList({type: "INITIAL_POSTS", payload: {
                     data
                 }})
@@ -137,7 +137,7 @@ const BlogStoreProvider = ({children}) => {
     useEffect(() => {
         const addNewPosts = async(blog) => {
             try{
-                const {data} = await axios.post('https://blogs-mern-m6yo.vercel.app:8081/blogs/new', {
+                const {data} = await axios.post('http://127.0.0.1:8081/blogs/new', {
                     ...blog, fullname: JSON.parse(sessionStorage.getItem('active')).fullname
                 })
                 
@@ -158,7 +158,7 @@ const BlogStoreProvider = ({children}) => {
     useEffect(() => {
         const removePosts = async(id) => {
             try{
-                await axios.delete(`https://blogs-mern-m6yo.vercel.app:8081/blogs/remove/${id}`);
+                await axios.delete(`http://127.0.0.1:8081/blogs/remove/${id}`);
                 dispatchPostList({type: "DELETE_POSTS", payload: {
                     id
                 }})
@@ -176,7 +176,7 @@ const BlogStoreProvider = ({children}) => {
     useEffect(() => {
         const updatePosts = async({author, title, body, tags, id}) => {
             try{
-                const {data} = await axios.put(`https://blogs-mern-m6yo.vercel.app:8081/blogs/edit/${id}`,{
+                const {data} = await axios.put(`http://127.0.0.1:8081/blogs/edit/${id}`,{
                     author,title, body, tags
                 })
                 dispatchPostList({type: "EDIT_POSTS", payload: {
@@ -196,7 +196,7 @@ const BlogStoreProvider = ({children}) => {
     useEffect(() => {
         const searchPostFromList = async(title) => {
             try{
-                const {data} = await axios.get(`https://blogs-mern-m6yo.vercel.app:8081/blogs/search?title=${title}`)
+                const {data} = await axios.get(`http://127.0.0.1:8081/blogs/search?title=${title}`)
                 dispatchPostList({type: "SEARCH_POSTS", payload: {
                     data
                 }})
@@ -220,7 +220,7 @@ const BlogStoreProvider = ({children}) => {
     useEffect(() => {
         const fetchUserBlog = async() => {
             try{
-                const {data} = await axios.get(`https://blogs-mern-m6yo.vercel.app:8081/blogs/user?fullname=${JSON.parse(sessionStorage.getItem('active')).fullname}`)
+                const {data} = await axios.get(`http://127.0.0.1:8081/blogs/user?fullname=${JSON.parse(sessionStorage.getItem('active')).fullname}`)
                 dispatchPostList({type: "USER_BLOGS", payload: {
                     data
                 }})
@@ -237,7 +237,7 @@ const BlogStoreProvider = ({children}) => {
     useEffect(() => {
         const fetchUserSpecificBlog = async(name) => {
             try{
-                const {data} = await axios.get(`https://blogs-mern-m6yo.vercel.app:8081/blogs/user?fullname=${name}`)
+                const {data} = await axios.get(`http://127.0.0.1:8081/blogs/user?fullname=${name}`)
                 dispatchPostList({type: "AUTHUSER_BLOGS", payload: {
                     data
                 }})
@@ -255,7 +255,7 @@ const BlogStoreProvider = ({children}) => {
     useEffect(() => {
         const fetchAllUsers = async() => {
             try{
-                const {data} = await axios.get(`https://blogs-mern-m6yo.vercel.app:8081/auth/authusers`);
+                const {data} = await axios.get(`http://127.0.0.1:8081/auth/authusers`);
                 dispatchAuthInformation({type: "AUTH_INFO", payload: {
                     data
                 }})
